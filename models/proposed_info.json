@@ -1,0 +1,21 @@
+{
+  "P0": {
+    "threshold": 0.030779706314206123,
+    "params": 18399,
+    "n_features": 55
+  },
+  "P1": {
+    "threshold": 0.11606182157993317,
+    "params": 14754,
+    "n_features": 10
+  },
+  "P2": {
+    "threshold": "adaptive",
+    "calibrated_k": 25.0,
+    "alpha": 0.3,
+    "window": 100,
+    "persistence": 3,
+    "params": 14754,
+    "n_features": 10
+  }
+}

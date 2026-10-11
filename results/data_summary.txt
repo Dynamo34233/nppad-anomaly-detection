@@ -1,0 +1,61 @@
+===========================================================================
+EXPLORATION REPORT: Nuclear Power Plant Accident Data (NPPAD)
+===========================================================================
+Base data directory: C:\Users\dheem\.gemini\antigravity\scratch\nppad-anomaly-detection\data
+Operational CSV directory: C:\Users\dheem\.gemini\antigravity\scratch\nppad-anomaly-detection\data\Operation_csv_data
+
+[1] Directory Structure & Accident Categories:
+  - Category: ATWS       | Scenarios:    1 CSV files
+  - Category: FLB        | Scenarios:  100 CSV files
+  - Category: LACP       | Scenarios:    1 CSV files
+  - Category: LLB        | Scenarios:  101 CSV files
+  - Category: LOCA       | Scenarios:  100 CSV files
+  - Category: LOCAC      | Scenarios:  100 CSV files
+  - Category: LOF        | Scenarios:    1 CSV files
+  - Category: LR         | Scenarios:   99 CSV files
+  - Category: MD         | Scenarios:  100 CSV files
+  - Category: Normal     | Scenarios:    1 CSV files
+  - Category: RI         | Scenarios:  100 CSV files
+  - Category: RW         | Scenarios:  100 CSV files
+  - Category: SGATR      | Scenarios:  100 CSV files
+  - Category: SGBTR      | Scenarios:  110 CSV files
+  - Category: SLBIC      | Scenarios:  101 CSV files
+  - Category: SLBOC      | Scenarios:  100 CSV files
+  - Category: SP         | Scenarios:    1 CSV files
+  - Category: TT         | Scenarios:    1 CSV files
+Total operational scenario CSV files: 1217
+
+[2] Data Schema, Sampling Interval, Constant Columns, and NaNs:
+  - Normal baseline file shape: (302, 97) (rows x columns)
+  - Column names (97 sensors + time): ['TIME', 'P', 'TAVG', 'THA', 'THB', 'TCA', 'TCB', 'WRCA', 'WRCB', 'PSGA'] ... ['PPM', 'RRCA', 'RRCB', 'RRCO', 'WFLB']
+  - Data types: all {dtype('float64'): 97}
+  - Sampling interval: 10.0 seconds per step
+  - Normal file time duration: 3010.0 seconds (0.0s to 3010.0s)
+  - Constant columns in normal baseline (37): ['WLR', 'WUP', 'WHPI', 'WTRA', 'WTRB', 'QRHR', 'LVCR', 'FRCL', 'PRB', 'TRB', 'LWRB', 'QFCL', 'WBK', 'WCSP', 'MH2', 'CNH2', 'RHBR', 'WCFT', 'WLPI', 'RM1', 'RC87', 'RC131', 'STRB', 'STTB', 'WLD', 'MBK', 'EBK', 'TKLV', 'FRZR', 'TDBR', 'MDBR', 'MCRT', 'MGAS', 'TCRT', 'TSLP', 'PPM', 'WFLB']
+  - Missing/NaN values in normal baseline: 0
+  - Sample accident file lengths: min=156, max=636, median=544 steps
+  - Total NaNs across inspected accident scenarios: 0
+
+[3] Identification of Normal Data:
+  - Pure normal reference: 'Operation_csv_data/Normal/1.csv' (302 steps of 100% full-power steady-state).
+  - Additional normal transitions: 'Variable_Power_Data/NORM_*' power maneuvers.
+  - Pre-accident baseline: PCTRAN runs start at normal steady state at t=0s.
+    To enable continuous anomaly detection evaluation with sliding window W=30, each scenario
+    includes a normal lead-in baseline of 60 steps (600s) followed by the transient phase.
+
+[4] Severity Encoding Analysis:
+  - Severity is parameterized by the scenario filename in each accident folder:
+    * LOCA / LOCAC / FLB / SLBIC / SLBOC: break size % (1% - 100%)
+    * SGATR / SGBTR: % of 1 full tube rupture (1% - 110%)
+    * MD: % of unborated injection (1% - 100%)
+    * LR: % of full load rejected (1% - 100%)
+    * RW / RI: % rod withdrawal / insertion (1% - 100%)
+    * LLB: % nominal letdown flow (1% - 101%)
+    * Single-transient accidents (ATWS, LOF, LACP, TT, SP): full transient severity (100%)
+  - Severity Binning Strategy (Tertiles):
+    * Low Severity:    severity <= 33%
+    * Medium Severity: 33% < severity <= 66%
+    * High Severity:   severity > 66%
+
+[5] Generating Signal Plots (results/sample_signals.png)...
+Saved signal comparison plot to: C:\Users\dheem\.gemini\antigravity\scratch\nppad-anomaly-detection\results\sample_signals.png

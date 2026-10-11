@@ -1,0 +1,46 @@
+===========================================================================
+NPPAD PREPROCESSING PIPELINE
+===========================================================================
+Normal baseline lead-in segment shape: (60, 96)
+Found 17 accident types: ['ATWS', 'FLB', 'LACP', 'LLB', 'LOCA', 'LOCAC', 'LOF', 'LR', 'MD', 'RI', 'RW', 'SGATR', 'SGBTR', 'SLBIC', 'SLBOC', 'SP', 'TT']
+  ATWS    : 1 scenarios
+  FLB     : 100 scenarios
+  LACP    : 1 scenarios
+  LLB     : 101 scenarios
+  LOCA    : 100 scenarios
+  LOCAC   : 100 scenarios
+  LOF     : 1 scenarios
+  LR      : 99 scenarios
+  MD      : 100 scenarios
+  RI      : 100 scenarios
+  RW      : 100 scenarios
+  SGATR   : 100 scenarios
+  SGBTR   : 110 scenarios
+  SLBIC   : 101 scenarios
+  SLBOC   : 100 scenarios
+  SP      : 1 scenarios
+  TT      : 1 scenarios
+  Normal  : 1 scenarios
+
+Scenario split counts:
+  Train: 852 scenarios
+  Val:   186 scenarios
+  Test:  191 scenarios
+
+Feature filtering:
+  Original sensor features: 96
+  Constant sensors dropped: 41
+  Active sensors kept:      55
+Fitted MinMaxScaler on 51120 normal time steps.
+
+Processing train scenarios...
+Processing val scenarios...
+Processing test scenarios...
+
+Window Extraction Summary:
+  Training normal windows:   (26654, 30, 55)
+  Validation normal windows: (6008, 30, 55)
+  Total test scenarios:      191
+  Total test windows:        80948
+
+Saved preprocessed dataset to: C:\Users\dheem\.gemini\antigravity\scratch\nppad-anomaly-detection\data\preprocessed.pkl
