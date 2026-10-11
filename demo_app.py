@@ -23,8 +23,16 @@ st.markdown("Proof-of-Concept benchmark evaluating baseline and proposed causal 
 
 @st.cache_resource
 def load_resources():
-    with open(os.path.join(config.DATA_DIR, 'preprocessed.pkl'), 'rb') as f:
-        prep = pickle.load(f)
+    prep_path = os.path.join(config.DATA_DIR, 'preprocessed.pkl')
+    sample_path = os.path.join(config.MODELS_DIR, 'sample_scenarios.pkl')
+    if os.path.exists(prep_path):
+        with open(prep_path, 'rb') as f:
+            prep = pickle.load(f)
+    elif os.path.exists(sample_path):
+        with open(sample_path, 'rb') as f:
+            prep = pickle.load(f)
+    else:
+        raise FileNotFoundError("Neither preprocessed.pkl nor sample_scenarios.pkl found.")
     with open(os.path.join(config.MODELS_DIR, 'baseline_info.json'), 'r') as f:
         base_info = json.load(f)
     with open(os.path.join(config.MODELS_DIR, 'proposed_info.json'), 'r') as f:
